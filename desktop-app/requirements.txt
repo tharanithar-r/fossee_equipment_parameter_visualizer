@@ -1,0 +1,9 @@
+PyQt5>=5.15.9
+requests>=2.31.0
+numpy>=1.23.0,<2.0.0
+pandas>=2.0.0,<2.3.0
+matplotlib>=3.6.3,<4.0.0
+
+# Note: These versions are tested and have pre-built wheels for Windows
+# If installation fails, try:
+# pip install --only-binary :all: numpy pandas matplotlib
