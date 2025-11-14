@@ -1,115 +1,156 @@
 # Chemical Equipment Parameter Visualizer
 
-A hybrid web and desktop application for visualizing and analyzing chemical equipment data. Built with Django REST Framework backend, React web frontend, and PyQt5 desktop application.
+A full-stack application for visualizing and analyzing chemical equipment data with both web and desktop interfaces. Upload CSV files containing equipment parameters and get instant analytics with interactive charts, statistics, and PDF reports.
 
 ## Features
 
-- **CSV Upload**: Upload chemical equipment data with parameters (Equipment Name, Type, Flowrate, Pressure, Temperature)
-- **Data Visualization**: Interactive charts showing equipment type distribution and parameter statistics
-- **Summary Analytics**: Automatic calculation of averages, min/max values
-- **Dataset History**: Store and manage last 5 uploaded datasets
-- **PDF Reports**: Generate and download comprehensive PDF reports
-- **JWT Authentication**: Secure user authentication with token-based system
-- **Dark Mode**: Toggle between light and dark themes (Web only)
-- **Dual Interface**: Access via modern web browser or desktop application
+### Core Functionality
+- **CSV Data Upload** - Import equipment data with parameters (Name, Type, Flowrate, Pressure, Temperature)
+- **Interactive Visualizations** - Pie charts with percentage labels and grouped bar charts
+- **Real-time Analytics** - Automatic calculation of averages, min/max values, and type distribution
+- **Dataset Management** - Store and manage up to 5 datasets per user with dropdown selection
+- **PDF Report Generation** - Download comprehensive reports with charts and data tables
+- **Sortable Data Tables** - Client-side sorting and pagination for equipment details
+
+### User Experience
+- **JWT Authentication** - Secure token-based user authentication
+- **Theme Toggle** - Light/dark mode support in both web and desktop apps
+- **Dual Interface** - Access via modern web browser or native desktop application
+- **Responsive Design** - Web interface works on desktop, tablet, and mobile devices
+- **CSV Validation** - Automatic validation with detailed error messages
+
+## Tech Stack
+
+### Backend
+- **Django 5.0** + **Django REST Framework** - RESTful API server
+- **Simple JWT** - Token-based authentication
+- **Pandas** - CSV parsing and data analytics
+- **ReportLab** - PDF report generation
+- **SQLite** - Database for development and production
+
+### Web Frontend
+- **React 19** + **TypeScript** - Modern web framework
+- **Vite** - Fast build tool and dev server
+- **shadcn/ui** - Beautiful UI components
+- **Tailwind CSS** - Utility-first styling
+- **Chart.js** - Interactive data visualizations
+- **TanStack Table** - Advanced table features
+- **Axios** - HTTP client for API calls
+
+### Desktop Application
+- **PyQt5** - Native desktop GUI framework
+- **Matplotlib** - Chart rendering
+- **Requests** - HTTP client for API communication
 
 ## Project Structure
 
 ```
-.
-├── backend/                 # Django REST Framework API
-│   ├── api/                # Main API app
-│   ├── config/             # Django settings
+chemical-visualizer/
+├── backend/                    # Django REST API
+│   ├── api/                   # Main API application
+│   │   ├── models.py         # Dataset and Equipment models
+│   │   ├── views.py          # API endpoints
+│   │   ├── serializers.py    # Data serialization
+│   │   └── utils.py          # PDF generation utilities
+│   ├── config/               # Django configuration
+│   │   ├── settings.py       # Project settings
+│   │   └── urls.py           # URL routing
 │   ├── manage.py
 │   └── requirements.txt
-├── web-frontend/           # React + TypeScript web app
+│
+├── web-frontend/              # React web application
 │   ├── src/
+│   │   ├── components/       # Reusable UI components
+│   │   ├── contexts/         # React contexts (Auth, Theme)
+│   │   ├── lib/              # Utilities and API client
+│   │   ├── pages/            # Page components
+│   │   └── main.tsx          # Application entry point
 │   ├── package.json
 │   └── vite.config.ts
-├── desktop-app/            # PyQt5 desktop application
-│   ├── main.py
-│   ├── auth_window.py
-│   ├── main_window.py
-│   ├── api_client.py
+│
+├── desktop-app/               # PyQt5 desktop application
+│   ├── main.py               # Application entry point
+│   ├── auth_window.py        # Login/Register window
+│   ├── main_window.py        # Main application window
+│   ├── api_client.py         # API communication
+│   ├── theme_manager.py      # Theme management
 │   └── requirements.txt
-├── sample_data/            # Sample CSV files
+│
+├── sample_data/              # Sample CSV files
 │   └── sample_equipment_data.csv
+│
 └── README.md
 ```
 
-## Tech Stack
-
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| Frontend (Web) | React.js + TypeScript + shadcn/ui + Chart.js | Modern web interface with charts |
-| Frontend (Desktop) | PyQt5 + Matplotlib | Desktop application with embedded charts |
-| Backend | Django + Django REST Framework | RESTful API server |
-| Authentication | JWT (Simple JWT) | Secure token-based auth |
-| Data Processing | Pandas | CSV parsing and analytics |
-| Database | SQLite | Store datasets and user data |
-| PDF Generation | ReportLab | Generate PDF reports |
-
 ## Prerequisites
 
-- Python 3.8+
-- Node.js 16+
-- npm or yarn
+- **Python** 3.8 or higher
+- **Node.js** 16 or higher
+- **npm** or **yarn**
+- **pip** (Python package manager)
 
-## Setup Instructions
+## Installation & Setup
 
 ### 1. Backend Setup
 
 ```bash
+# Navigate to backend directory
 cd backend
 
-# Create virtual environment
+# Create and activate virtual environment
 python -m venv venv
 
-# Activate virtual environment
-# Windows:
+# Windows
 venv\Scripts\activate
-# Linux/Mac:
+
+# Linux/Mac
 source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run migrations
+# Create database tables
 python manage.py makemigrations
 python manage.py migrate
 
-# Create superuser (optional)
+# (Optional) Create admin user
 python manage.py createsuperuser
 
-# Run server
+# Start development server
 python manage.py runserver
 ```
 
-Backend will run on `http://localhost:8000`
+**Backend runs on:** `http://localhost:8000`
 
 ### 2. Web Frontend Setup
 
 ```bash
+# Navigate to web frontend directory
 cd web-frontend
 
 # Install dependencies
 npm install
 
-# Run development server
+# Start development server
 npm run dev
 ```
 
-Web app will run on `http://localhost:5173`
+**Web app runs on:** `http://localhost:5173`
 
-### 3. Desktop App Setup
+### 3. Desktop Application Setup
 
 ```bash
+# Navigate to desktop app directory
 cd desktop-app
 
-# Create virtual environment (if not using backend's venv)
+# Create and activate virtual environment
 python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
+
+# Windows
+venv\Scripts\activate
+
+# Linux/Mac
+source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -118,115 +159,260 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## Usage
+## Usage Guide
 
 ### Web Application
 
-1. Open `http://localhost:5173` in your browser
-2. Register a new account or login
-3. Upload a CSV file with equipment data
-4. View interactive charts and statistics
-5. Download PDF reports
-6. Toggle dark mode using the moon/sun icon
+1. **Access** - Open `http://localhost:5173` in your browser
+2. **Register** - Create a new account or login with existing credentials
+3. **Upload Data** - Click "Upload CSV" and select your equipment data file
+4. **Select Dataset** - Choose from your uploaded datasets using the dropdown
+5. **Analyze** - View interactive pie and bar charts with statistics
+6. **Sort & Filter** - Click column headers in the data table to sort
+7. **Download Report** - Click "Download PDF" to generate a comprehensive report
+8. **Toggle Theme** - Use the sun/moon icon to switch between light and dark modes
 
 ### Desktop Application
 
-1. Run `python main.py` from the desktop-app directory
-2. Login or register an account
-3. Upload CSV files using the "Upload CSV" button
-4. Select datasets from the dropdown
-5. View charts and data table
-6. Download PDF reports
+1. **Launch** - Run `python main.py` from the desktop-app directory
+2. **Login** - Enter your credentials or register a new account
+3. **Upload** - Click "Upload CSV" button to import data
+4. **Select Dataset** - Choose from the dropdown menu
+5. **View Charts** - See pie and bar charts with your data
+6. **Browse Table** - Scroll through the equipment details table
+7. **Download PDF** - Click "Download PDF" to save a report
+8. **Toggle Theme** - Click the theme button (☀️ Light / 🌙 Dark)
 
-### CSV Format
+### CSV File Format
 
-Your CSV file should have the following columns:
+Your CSV file must include these exact column headers:
 
 ```csv
 Equipment Name,Type,Flowrate,Pressure,Temperature
 Reactor-A1,Reactor,150.5,25.3,180.2
 Heat Exchanger-B2,Heat Exchanger,200.8,15.7,120.5
+Pump-C3,Pump,180.2,30.1,95.8
 ```
 
-Sample data is provided in `sample_data/sample_equipment_data.csv`
+**Requirements:**
+- Column names must match exactly (case-sensitive)
+- Flowrate, Pressure, and Temperature must be numeric values
+- Empty rows will be automatically removed
+
+**Sample Data:** See `sample_data/sample_equipment_data.csv` for a complete example
 
 ## API Endpoints
 
 ### Authentication
-- `POST /api/auth/register/` - Register new user
-- `POST /api/auth/login/` - Login and get JWT tokens
-- `POST /api/auth/refresh/` - Refresh access token
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register/` | Register new user |
+| POST | `/api/auth/login/` | Login and receive JWT tokens |
+| POST | `/api/auth/refresh/` | Refresh access token |
 
 ### Datasets
-- `GET /api/datasets/` - List all datasets (last 5)
-- `GET /api/datasets/{id}/` - Get dataset details
-- `POST /api/datasets/upload/` - Upload new CSV file
-- `DELETE /api/datasets/{id}/` - Delete dataset
-- `GET /api/datasets/{id}/summary/` - Get dataset summary with statistics
-- `GET /api/datasets/{id}/download_pdf/` - Download PDF report
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/datasets/` | List user's datasets (last 5) |
+| GET | `/api/datasets/{id}/` | Get dataset details with equipment |
+| POST | `/api/datasets/upload/` | Upload new CSV file |
+| DELETE | `/api/datasets/{id}/` | Delete dataset |
+| GET | `/api/datasets/{id}/summary/` | Get statistics and type distribution |
+| GET | `/api/datasets/{id}/download_pdf/` | Download PDF report |
 
-## Features Highlights
+**Authentication:** All dataset endpoints require JWT token in Authorization header:
+```
+Authorization: Bearer <access_token>
+```
 
-### Web Frontend
-- **Modern UI**: Built with shadcn/ui components and Tailwind CSS
-- **Responsive Design**: Works on desktop, tablet, and mobile
-- **Dark Mode**: Persistent theme preference
-- **Interactive Charts**: Using Chart.js for beautiful visualizations
-- **Real-time Updates**: Automatic refresh after uploads
+## Key Features Explained
 
-### Desktop Application
-- **Native Feel**: PyQt5 provides native OS integration
-- **Embedded Charts**: Matplotlib charts directly in the application
-- **File Dialogs**: Native file picker for CSV and PDF
-- **Offline Capable**: Works with local backend instance
+### Data Visualization
+- **Pie Chart** - Shows equipment type distribution with percentage labels on each slice
+- **Bar Chart** - Displays average, minimum, and maximum values for each parameter
+- **Interactive** - Click legend items to show/hide data series
+- **Theme-Aware** - Charts adapt colors based on light/dark theme
 
-## Security
+### Dataset Management
+- **Auto-Limit** - System keeps only the 5 most recent datasets per user
+- **Auto-Cleanup** - Older datasets are automatically deleted when limit is exceeded
+- **Quick Selection** - Dropdown shows dataset name, upload date, and item count
 
-- JWT-based authentication
-- Password hashing with Django's built-in system
-- CORS configuration for web frontend
-- Token refresh mechanism
-- Protected API endpoints
+### Data Table Features
+- **Sortable Columns** - Click any column header to sort ascending/descending
+- **Pagination** - Navigate through large datasets with Previous/Next buttons
+- **Responsive** - Table adapts to different screen sizes
 
-## Data Management
+### PDF Reports
+- **Comprehensive** - Includes all charts, statistics, and data tables
+- **Professional** - Clean layout with proper formatting
+- **Downloadable** - Save reports for offline viewing or sharing
 
-- Automatically stores last 5 datasets per user
-- Older datasets are automatically deleted
-- CSV validation on upload
-- Data cleaning (removes null values)
-- Efficient bulk insert for equipment records
+## Configuration
 
-## Troubleshooting
+### Backend Configuration
 
-### Backend Issues
-- **Port already in use**: Change port with `python manage.py runserver 8001`
-- **Database errors**: Delete `db.sqlite3` and run migrations again
-- **CORS errors**: Check `CORS_ALLOWED_ORIGINS` in `settings.py`
+Edit `backend/config/settings.py` to customize:
 
-### Frontend Issues
-- **Module not found**: Run `npm install` again
-- **API connection failed**: Ensure backend is running on port 8000
-- **Build errors**: Clear node_modules and reinstall
+```python
+# CORS settings for web frontend
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Add your frontend URL
+]
 
-### Desktop App Issues
-- **PyQt5 installation fails**: Try `pip install PyQt5-sip` first
-- **Matplotlib errors**: Install with `pip install matplotlib --upgrade`
-- **Connection refused**: Ensure backend is running
+# JWT token expiration
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+# Dataset limit per user
+MAX_DATASETS_PER_USER = 5  # Change in views.py
+```
+
+### Frontend Configuration
+
+Edit `web-frontend/src/lib/api.ts` to change API URL:
+
+```typescript
+const API_BASE_URL = 'http://localhost:8000/api';
+```
+
+### Desktop App Configuration
+
+Edit `desktop-app/api_client.py` to change API URL:
+
+```python
+self.base_url = 'http://localhost:8000/api'
+```
 
 ## Building for Production
 
 ### Web Frontend
+
 ```bash
 cd web-frontend
+
+# Build for production
 npm run build
-# Output in dist/ folder
+
+# Output will be in dist/ folder
+# Deploy dist/ folder to your web server
 ```
 
-### Desktop App
+### Desktop Application
+
 ```bash
+cd desktop-app
+
 # Install PyInstaller
 pip install pyinstaller
 
-# Create executable
-pyinstaller --onefile --windowed main.py
+# Create standalone executable
+pyinstaller --onefile --windowed --name ChemicalVisualizer main.py
+
+# Executable will be in dist/ folder
 ```
+
+### Backend Deployment
+
+For production deployment:
+
+1. Set `DEBUG = False` in settings.py
+2. Configure `ALLOWED_HOSTS`
+3. Use a production WSGI server (Gunicorn, uWSGI)
+4. Set up a reverse proxy (Nginx, Apache)
+5. Use environment variables for secrets
+6. Consider PostgreSQL or MySQL for production database
+
+## Troubleshooting
+
+### Backend Issues
+
+**Port already in use:**
+```bash
+python manage.py runserver 8001
+```
+
+**Database errors:**
+```bash
+# Delete database and recreate
+rm db.sqlite3
+python manage.py migrate
+```
+
+**CORS errors:**
+- Check `CORS_ALLOWED_ORIGINS` in settings.py
+- Ensure frontend URL is included
+
+### Frontend Issues
+
+**Module not found:**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**API connection failed:**
+- Verify backend is running on port 8000
+- Check API_BASE_URL in src/lib/api.ts
+
+**Build errors:**
+```bash
+npm run build -- --mode development
+```
+
+### Desktop App Issues
+
+**PyQt5 installation fails:**
+```bash
+pip install PyQt5-sip
+pip install PyQt5
+```
+
+**Connection refused:**
+- Ensure backend server is running
+- Check API URL in api_client.py
+
+**Theme not persisting:**
+- Check write permissions in desktop-app directory
+- theme_config.json should be created automatically
+
+## Development Tips
+
+### Hot Reload
+- Backend: Django auto-reloads on file changes
+- Web Frontend: Vite provides instant HMR (Hot Module Replacement)
+- Desktop App: Restart application after code changes
+
+### Debugging
+- Backend: Use Django Debug Toolbar or print statements
+- Web Frontend: Use browser DevTools and React DevTools
+- Desktop App: Use print statements or PyQt5 debugger
+
+### Testing
+- Backend: `python manage.py test`
+- Web Frontend: Add tests with Vitest
+- Desktop App: Manual testing recommended
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Support
+
+For issues, questions, or suggestions:
+- Open an issue on GitHub
+- Check existing issues for solutions
+- Review the troubleshooting section above
+
+## Acknowledgments
+
+- **shadcn/ui** - Beautiful UI components
+- **Chart.js** - Powerful charting library
+- **Django REST Framework** - Robust API framework
+- **PyQt5** - Cross-platform GUI toolkit
