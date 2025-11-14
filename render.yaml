@@ -1,0 +1,23 @@
+databases:
+  - name: chemical-visualizer-db
+    databaseName: chemical_visualizer
+    user: chemical_visualizer
+
+services:
+  - type: web
+    name: chemical-visualizer-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chemical-visualizer-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
