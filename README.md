@@ -23,7 +23,7 @@ A full-stack application for visualizing and analyzing chemical equipment data w
 
 ### Backend
 - **Django 5.0** + **Django REST Framework** - RESTful API server
-- **Simple JWT** - Token-based authentication
+- **JWT** - Token-based authentication
 - **Pandas** - CSV parsing and data analytics
 - **ReportLab** - PDF report generation
 - **SQLite** - Database for development and production
@@ -76,9 +76,6 @@ chemical-visualizer/
 │   ├── theme_manager.py      # Theme management
 │   └── requirements.txt
 │
-├── sample_data/              # Sample CSV files
-│   └── sample_equipment_data.csv
-│
 └── README.md
 ```
 
@@ -113,7 +110,7 @@ pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 
-# (Optional) Create admin user
+# (optional) Create admin user
 python manage.py createsuperuser
 
 # Start development server
@@ -181,7 +178,7 @@ python main.py
 5. **View Charts** - See pie and bar charts with your data
 6. **Browse Table** - Scroll through the equipment details table
 7. **Download PDF** - Click "Download PDF" to save a report
-8. **Toggle Theme** - Click the theme button (☀️ Light / 🌙 Dark)
+8. **Toggle Theme** - Click the theme button (Light/Dark)
 
 ### CSV File Format
 
@@ -198,8 +195,6 @@ Pump-C3,Pump,180.2,30.1,95.8
 - Column names must match exactly (case-sensitive)
 - Flowrate, Pressure, and Temperature must be numeric values
 - Empty rows will be automatically removed
-
-**Sample Data:** See `sample_data/sample_equipment_data.csv` for a complete example
 
 ## API Endpoints
 
@@ -324,95 +319,3 @@ For production deployment:
 4. Set up a reverse proxy (Nginx, Apache)
 5. Use environment variables for secrets
 6. Consider PostgreSQL or MySQL for production database
-
-## Troubleshooting
-
-### Backend Issues
-
-**Port already in use:**
-```bash
-python manage.py runserver 8001
-```
-
-**Database errors:**
-```bash
-# Delete database and recreate
-rm db.sqlite3
-python manage.py migrate
-```
-
-**CORS errors:**
-- Check `CORS_ALLOWED_ORIGINS` in settings.py
-- Ensure frontend URL is included
-
-### Frontend Issues
-
-**Module not found:**
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
-**API connection failed:**
-- Verify backend is running on port 8000
-- Check API_BASE_URL in src/lib/api.ts
-
-**Build errors:**
-```bash
-npm run build -- --mode development
-```
-
-### Desktop App Issues
-
-**PyQt5 installation fails:**
-```bash
-pip install PyQt5-sip
-pip install PyQt5
-```
-
-**Connection refused:**
-- Ensure backend server is running
-- Check API URL in api_client.py
-
-**Theme not persisting:**
-- Check write permissions in desktop-app directory
-- theme_config.json should be created automatically
-
-## Development Tips
-
-### Hot Reload
-- Backend: Django auto-reloads on file changes
-- Web Frontend: Vite provides instant HMR (Hot Module Replacement)
-- Desktop App: Restart application after code changes
-
-### Debugging
-- Backend: Use Django Debug Toolbar or print statements
-- Web Frontend: Use browser DevTools and React DevTools
-- Desktop App: Use print statements or PyQt5 debugger
-
-### Testing
-- Backend: `python manage.py test`
-- Web Frontend: Add tests with Vitest
-- Desktop App: Manual testing recommended
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## Support
-
-For issues, questions, or suggestions:
-- Open an issue on GitHub
-- Check existing issues for solutions
-- Review the troubleshooting section above
-
-## Acknowledgments
-
-- **shadcn/ui** - Beautiful UI components
-- **Chart.js** - Powerful charting library
-- **Django REST Framework** - Robust API framework
-- **PyQt5** - Cross-platform GUI toolkit
