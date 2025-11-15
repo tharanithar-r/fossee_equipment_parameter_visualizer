@@ -105,7 +105,7 @@ SIMPLE_JWT = {
 # CORS Settings
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://fossee-equipment-parameter-visualiz.vercel.app/",
+    "https://fossee-equipment-parameter-visualiz.vercel.app",
     "https://chemical-visualizer-backend.onrender.com",
     "http://127.0.0.1:5173",
     "http://localhost:3000",
